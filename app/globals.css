@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+html {
+  font-size: 100%;
 }
 
-@theme inline {
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius: 0.5rem;
+  --font-sans: Outfit, sans-serif;
+  --font-serif: "Playfair Display", serif;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+    /* Cream Background */
+    --background: #F9F7F2;
+    --foreground: #3E3630;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    /* White Surface */
+    --card: #FFFFFF;
+    --card-foreground: #3E3630;
+    --popover: #FFFFFF;
+    --popover-foreground: #3E3630;
+
+    /* Light Brown / Bronze Primary */
+    --primary: #9C6644;
+    --primary-foreground: #F9F7F2;
+
+    /* Beige Secondary */
+    --secondary: #E6CCB2;
+    --secondary-foreground: #3E3630;
+
+    /* Muted Tones */
+    --muted: #F3F4F6;
+    --muted-foreground: #6B7280;
+
+    /* Accent */
+    --accent: #7F5539;
+    --accent-foreground: #F9F7F2;
+
+    /* Destructive */
+    --destructive: #EF4444;
+    --destructive-foreground: #F9FAFB;
+
+    /* Borders & Inputs */
+    --border: #E5E7EB;
+    --input: #E5E7EB;
+    --ring: #9C6644;
+  }
+
+  body {
+    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-background text-foreground;
+  }
 }

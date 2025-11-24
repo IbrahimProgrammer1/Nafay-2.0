@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Overview
+
+LUXE is a premium laptop storefront built with Next.js App Router, TypeScript, and Tailwind CSS. The app is being migrated from browser-only storage to Supabase for persistent product, wishlist, comparison, and inquiry data. This document explains how to get the project running locally as well as how to wire up Supabase.
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `env.example` to `.env.local` and fill in your Supabase credentials:
 
-## Learn More
+```
+NEXT_PUBLIC_SUPABASE_URL="https://your-project-ref.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="public-anon-key"
+SUPABASE_SERVICE_ROLE_KEY="service-role-key"
+```
 
-To learn more about Next.js, take a look at the following resources:
+- `NEXT_PUBLIC_SUPABASE_URL`: Supabase project URL.
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: anonymous key used by the browser client (read-only + limited writes).
+- `SUPABASE_SERVICE_ROLE_KEY`: service key used **only** inside server actions/API routes for privileged operations.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Never expose the service role key to the browser bundle.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Supabase Setup Checklist
 
-## Deploy on Vercel
+1. Create a Supabase project.
+2. Apply the SQL migrations under `/supabase/migrations` (coming soon) to create tables for products, wishlists, comparisons, recently viewed items, inquiries, and admin accounts.
+3. Configure Row Level Security policies following the guidelines in `/docs/supabase.md` (coming soon).
+4. Enable storage buckets for product imagery if you plan to offload assets from `public/images`.
+5. Update the environment variables locally (`.env.local`) and in your hosting provider dashboard (Vercel/Netlify/etc.).
+6. The middleware now issues an HttpOnly `device_id` cookie. If you migrate existing localStorage data, build an export step that POSTs the data to Supabase using the `/api/device` endpoint to associate it with the issued ID.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command        | Description                         |
+| -------------- | ----------------------------------- |
+| `npm run dev`  | Run the Next.js development server. |
+| `npm run build`| Create an optimized production build.|
+| `npm start`    | Run the production server.          |
+
+## Deployment Notes
+
+- Set all Supabase environment variables in your deployment provider before building.
+- For production, ensure HTTPS is enabled so the HttpOnly `device_id` cookie cannot be intercepted.
+- Supabase backups and monitoring should be configured from the Supabase dashboard.
+
+## Contributing
+
+1. Fork the repo and create a feature branch.
+2. Run `npm run lint` and confirm there are no TypeScript errors.
+3. Open a PR describing the changes and any Supabase migrations that were added.
