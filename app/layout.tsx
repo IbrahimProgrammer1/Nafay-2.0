@@ -11,6 +11,7 @@ import { ProductProvider } from "@/contexts/ProductContext";
 import { InquiryProvider } from "@/contexts/InquiryContext";
 import ComparisonBar from "@/components/comparison/ComparisonBar";
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { Analytics } from "@vercel/analytics/next";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -59,6 +60,7 @@ export default function RootLayout({
           </ProductProvider>
         </AdminProvider>
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''} />
+        <Analytics />
       </body>
     </html>
   );
