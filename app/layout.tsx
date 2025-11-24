@@ -27,7 +27,11 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Nafay - Premium Laptop Store",
   description: "Discover premium laptops for gaming, business, creative work, and everyday use. From ultraportable to high-performance workstations with 15-day warranty.",
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
