@@ -6,7 +6,7 @@ const DEVICE_CREATED_AT_COOKIE = 'device_created_at';
 const DEVICE_ACTIVITY_COOKIE = 'device_activity_at';
 const DEFAULT_MAX_AGE = 60 * 60 * 24 * 365 * 2; // 2 years
 
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const response = NextResponse.next();
   const existingDeviceId = request.cookies.get(DEVICE_ID_COOKIE)?.value;
   const existingCreatedAt = request.cookies.get(DEVICE_CREATED_AT_COOKIE)?.value;
